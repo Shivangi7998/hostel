@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Posthostel from "./pages/Posthostel";
 import Contacthostel from "./pages/Contacthostel";
+import HostelDetails from "./pages/HostelDetails";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/findhostel" element={<Findhostel />} />
         <Route path="/posthostel" element={<Posthostel />} />
         <Route path="/contact" element={<Contacthostel />} />
+        <Route path="/hostel/:name" element={<HostelDetails />} />
         
           
       </Routes>

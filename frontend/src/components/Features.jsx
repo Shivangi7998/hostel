@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const hostels = [
   {
@@ -6,82 +7,110 @@ const hostels = [
     location: "Delhi University",
     price: "₹4500/month",
     image: "https://picsum.photos/400/200?random=1",
+    description: "A cozy and affordable PG near Delhi University with all amenities.",
   },
   {
     name: "GreenNest Hostel",
     location: "Bangalore",
     price: "₹6000/month",
     image: "https://picsum.photos/400/200?random=2",
+    description: "Green and peaceful environment perfect for students and professionals.",
   },
   {
     name: "Comfort Stay",
     location: "Pune",
     price: "₹5000/month",
     image: "https://picsum.photos/400/200?random=3",
+    description: "Comfortable stay with mess facilities and WiFi.",
   },
   {
-    name: "New Frezon hostel",
+    name: "New Frezon Hostel",
     location: "East Delhi",
     price: "₹4500/month",
     image: "https://picsum.photos/400/200?random=4",
+    description: "Safe and affordable hostel for students.",
   },
   {
     name: "Chanakya Boys Hostel",
     location: "Patna",
     price: "₹3000/month",
     image: "https://picsum.photos/400/200?random=5",
+    description: "Budget-friendly boys hostel with basic facilities.",
   },
   {
     name: "Mahalaxmi Girls Hostel",
     location: "Patna",
     price: "₹3500/month",
     image: "https://picsum.photos/400/200?random=6",
+    description: "Secure girls hostel with CCTV and caretaker.",
   },
   {
-    name: "Shanti hostel",
+    name: "Shanti Hostel",
     location: "Patna",
     price: "₹4000/month",
     image: "https://picsum.photos/400/200?random=7",
+    description: "Peaceful stay for students in Patna.",
   },
   {
-    name: "AVMS Girls pg",
+    name: "AVMS Girls PG",
     location: "Delhi",
     price: "₹5000/month",
     image: "https://picsum.photos/400/200?random=8",
+    description: "Modern PG with attached bathrooms and WiFi.",
   },
 ];
 
-const Features = () => {
+const Features = ({ searchQuery = "" }) => {
+  const query = searchQuery.trim();
+  const navigate = useNavigate();
+
+  const filteredHostels = hostels.filter((hostel) => {
+    if (query === "") return true;
+    return (
+      hostel.name.localeCompare(query, undefined, { sensitivity: "base" }) === 0 ||
+      hostel.name.includes(query) ||
+      hostel.location.localeCompare(query, undefined, { sensitivity: "base" }) === 0 ||
+      hostel.location.includes(query)
+    );
+  });
+
   return (
-    <div className="bg-gray-50 py-10 px-5">
-      <h2 className="text-2xl font-bold text-center mb-8">Featured Hostels</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {hostels.map((hostel, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-md overflow-hidden 
-            hover:shadow-xl transform transition duration-300 hover:scale-105"
-          >
-            <img
-              src={hostel.image}
-              alt={hostel.name}
-              className="w-full h-40 object-cover transition duration-300 ease-in-out hover:scale-110"
-            />
-            <div className="p-4 text-center transition duration-300">
-              <h3 className="text-lg font-semibold">{hostel.name}</h3>
-              <p className="text-gray-600">
-                {hostel.location} | {hostel.price}
-              </p>
-              <button
-                className="mt-3 px-4 py-2 bg-indigo-600 text-white text-sm rounded-md 
-                hover:bg-indigo-700 hover:scale-105 transition duration-300 ease-in-out"
-              >
-                View Details
-              </button>
+    <div className="p-5 bg-gray-50 min-h-screen">
+      <h2 className="text-center text-2xl font-bold mb-5">
+        {query ? `Search Results for "${query}"` : "🏠 Featured Hostels"}
+      </h2>
+
+      {filteredHostels.length === 0 ? (
+        <p className="text-center text-gray-600">No hostels found.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          {filteredHostels.map((hostel, index) => (
+            <div
+              key={index}
+              className="bg-white border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
+            >
+              <img
+                src={hostel.image}
+                alt={hostel.name}
+                className="w-full h-40 object-cover"
+                loading="lazy"
+              />
+              <div className="p-3 text-center">
+                <h3 className="font-semibold">{hostel.name}</h3>
+                <p className="text-sm text-gray-600">
+                  {hostel.location} | {hostel.price}
+                </p>
+                <button
+                  onClick={() => navigate(`/hostel/${encodeURIComponent(hostel.name)}`, { state: hostel })}
+                  className="mt-2 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
+                >
+                  View Details
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

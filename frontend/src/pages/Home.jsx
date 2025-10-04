@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Hero from '../components/Hero'
-import Features from '../components/Features'
+// import Features from '../components/Features'
 import Post from '../components/Post'
 import Contact from '../components/Contact'
 
@@ -10,7 +10,7 @@ const Home = () => {
     <div>
 
 <Hero/>
-<Features/>
+{/* <Features/> */}
 <Post/>
 <Contact/>
 

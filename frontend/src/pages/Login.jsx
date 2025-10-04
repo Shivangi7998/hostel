@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import { useState } from "react";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,8 +15,17 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     console.log("Login Data:", formData);
-    // 👉 Yaha API call karna hoga backend ke liye
+
+    // 👉 Mock login validation
+    if (formData.email && formData.password) {
+      localStorage.setItem("isLoggedIn", "true"); // set login state
+      alert("Login successful!");
+      navigate(-1); // go back to previous page
+    } else {
+      alert("Enter valid credentials!");
+    }
   };
 
   return (
