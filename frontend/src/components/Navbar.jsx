@@ -13,7 +13,7 @@ export default function Navbar() {
         <li>
           <Link
             to="/"
-            className="hover:text-blue-600 transition"
+            className="hover:text-black transition"
           >
             Home
           </Link>
@@ -21,23 +21,23 @@ export default function Navbar() {
         <li>
           <Link
             to="/findhostel"
-            className="hover:text-blue-600 transition"
+            className="hover:text-black transition"
           >
             Find Hostel
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             to="/posthostel"
-            className="hover:text-blue-600 transition"
+            className="hover:text-black transition"
           >
             Post Hostel
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link
             to="/contact"
-            className="hover:text-blue-600 transition"
+            className="hover:text-black transition"
           >
             Contact
           </Link>
@@ -48,10 +48,11 @@ export default function Navbar() {
       <div>
         <Link to="/signup">
           <button className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition">
-            Create an Account
+            SignUp
           </button>
         </Link>
       </div>
+      
     </nav>
   );
 }
